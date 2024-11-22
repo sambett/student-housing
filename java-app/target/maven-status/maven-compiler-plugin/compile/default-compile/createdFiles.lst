@@ -1,0 +1,6 @@
+com\housing\config\DatabaseConfig.class
+com\housing\config\JerseyConfig.class
+com\housing\model\Property.class
+com\housing\config\CORSFilter.class
+com\housing\dao\PropertyDAO.class
+com\housing\resources\PropertyResource.class
