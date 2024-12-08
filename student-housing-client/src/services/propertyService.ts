@@ -3,17 +3,21 @@ import { Property, PropertyFilters } from '../types/property';
 const BASE_URL = '/api';
 
 const fetchConfig = {
+  mode: 'cors' as RequestMode,
   credentials: 'include' as RequestCredentials,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
   }
 };
 
 export const propertyService = {
   getAllProperties: async (): Promise<Property[]> => {
     try {
-      const response = await fetch(`${BASE_URL}/properties`, fetchConfig);
+      const response = await fetch(`${BASE_URL}/properties`, {
+        ...fetchConfig,
+        method: 'GET'
+      });
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return response.json();
     } catch (error) {
@@ -23,7 +27,10 @@ export const propertyService = {
   },
 
   getProperty: async (id: number): Promise<Property> => {
-    const response = await fetch(`${BASE_URL}/properties/${id}`, fetchConfig);
+    const response = await fetch(`${BASE_URL}/properties/${id}`, {
+      ...fetchConfig,
+      method: 'GET'
+    });
     if (!response.ok) throw new Error('Failed to fetch property');
     return response.json();
   },
@@ -32,6 +39,10 @@ export const propertyService = {
     const response = await fetch(`${BASE_URL}/properties`, {
       ...fetchConfig,
       method: 'POST',
+      headers: {
+        ...fetchConfig.headers,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(property),
     });
     if (!response.ok) throw new Error('Failed to create property');
@@ -42,6 +53,10 @@ export const propertyService = {
     const response = await fetch(`${BASE_URL}/properties/${id}`, {
       ...fetchConfig,
       method: 'PUT',
+      headers: {
+        ...fetchConfig.headers,
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(property),
     });
     if (!response.ok) throw new Error('Failed to update property');
@@ -52,6 +67,10 @@ export const propertyService = {
     const response = await fetch(`${BASE_URL}/properties/${id}`, {
       ...fetchConfig,
       method: 'DELETE',
+      headers: {
+        ...fetchConfig.headers,
+        'Content-Type': 'application/json',
+      }
     });
     if (!response.ok) throw new Error('Failed to delete property');
   },
@@ -63,7 +82,10 @@ export const propertyService = {
     if (filters.minRooms) queryParams.append('minRooms', filters.minRooms);
     if (filters.neighborhood) queryParams.append('neighborhood', filters.neighborhood);
 
-    const response = await fetch(`${BASE_URL}/properties/search?${queryParams}`, fetchConfig);
+    const response = await fetch(`${BASE_URL}/properties/search?${queryParams}`, {
+      ...fetchConfig,
+      method: 'GET'
+    });
     if (!response.ok) throw new Error('Failed to search properties');
     return response.json();
   },

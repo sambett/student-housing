@@ -5,12 +5,13 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   server: {
+    port: 5173, // Fix port explicitly
+    strictPort: true, // Add this line to force the specific port
     proxy: {
       '/api': {
         target: 'http://localhost:8080/student-housing-1.0-SNAPSHOT',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, '/api'),
         configure: (proxy) => {
           proxy.on('error', (err) => {
             console.log('proxy error', err);

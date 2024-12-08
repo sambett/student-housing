@@ -13,10 +13,6 @@ public class JerseyConfig extends ResourceConfig {
         
         // Enable CORS
         register(new CORSFilter());
-        
-        // Enable all HTTP methods
-        property("jersey.config.server.provider.classnames", 
-                "org.glassfish.jersey.jackson.JacksonFeature");
     }
 }
 
@@ -24,17 +20,17 @@ class CORSFilter implements javax.ws.rs.container.ContainerResponseFilter {
     @Override
     public void filter(javax.ws.rs.container.ContainerRequestContext requestContext,
                       javax.ws.rs.container.ContainerResponseContext responseContext) {
-        responseContext.getHeaders().add("Access-Control-Allow-Origin", "http://localhost:5174");
+        // Update port to 5173
+        responseContext.getHeaders().add("Access-Control-Allow-Origin", "http://localhost:5173");
         responseContext.getHeaders().add("Access-Control-Allow-Headers", 
-            "Origin, Content-Type, Accept, Authorization, X-Requested-With");
+            "origin, content-type, accept, authorization");
         responseContext.getHeaders().add("Access-Control-Allow-Methods", 
             "GET, POST, PUT, DELETE, OPTIONS, HEAD");
         responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
         
-        // Handle preflight
-        if (requestContext.getMethod().equals("OPTIONS")) {
+        // Handle preflight requests
+        if (requestContext.getMethod().equalsIgnoreCase("OPTIONS")) {
             responseContext.setStatus(200);
-            return;
         }
     }
 }

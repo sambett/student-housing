@@ -17,15 +17,18 @@ public class PropertyResource {
         this.propertyDAO = new PropertyDAO();
     }
 
+    private Response.ResponseBuilder addCorsHeaders(Response.ResponseBuilder responseBuilder) {
+        return responseBuilder
+            .header("Access-Control-Allow-Origin", "http://localhost:5173")
+            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+            .header("Access-Control-Allow-Credentials", "true");
+    }
+
     @OPTIONS
     @Path("{path : .*}")
     public Response options() {
-        return Response.ok("")
-            .header("Access-Control-Allow-Origin", "http://localhost:5174")
-            .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-            .header("Access-Control-Allow-Credentials", "true")
-            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-            .build();
+        return addCorsHeaders(Response.ok("")).build();
     }
 
     @GET
@@ -33,12 +36,12 @@ public class PropertyResource {
         try {
             System.out.println("Getting all properties");
             List<Property> properties = propertyDAO.getAllProperties();
-            return Response.ok(properties).build();
+            return addCorsHeaders(Response.ok(properties)).build();
         } catch (Exception e) {
             System.out.println("Error getting all properties: " + e.getMessage());
             e.printStackTrace();
-            return Response.serverError()
-                         .entity("Error fetching properties: " + e.getMessage())
+            return addCorsHeaders(Response.serverError()
+                         .entity("Error fetching properties: " + e.getMessage()))
                          .build();
         }
     }
@@ -50,16 +53,16 @@ public class PropertyResource {
             System.out.println("Getting property with ID: " + id);
             Property property = propertyDAO.getProperty(id);
             if (property != null) {
-                return Response.ok(property).build();
+                return addCorsHeaders(Response.ok(property)).build();
             }
-            return Response.status(Response.Status.NOT_FOUND)
-                         .entity("Property not found with ID: " + id)
+            return addCorsHeaders(Response.status(Response.Status.NOT_FOUND)
+                         .entity("Property not found with ID: " + id))
                          .build();
         } catch (Exception e) {
             System.out.println("Error getting property: " + e.getMessage());
             e.printStackTrace();
-            return Response.serverError()
-                         .entity("Error fetching property: " + e.getMessage())
+            return addCorsHeaders(Response.serverError()
+                         .entity("Error fetching property: " + e.getMessage()))
                          .build();
         }
     }
@@ -69,14 +72,14 @@ public class PropertyResource {
         try {
             System.out.println("Creating new property: " + property.getTitle());
             Property created = propertyDAO.createProperty(property);
-            return Response.status(Response.Status.CREATED)
-                         .entity(created)
+            return addCorsHeaders(Response.status(Response.Status.CREATED)
+                         .entity(created))
                          .build();
         } catch (Exception e) {
             System.out.println("Error creating property: " + e.getMessage());
             e.printStackTrace();
-            return Response.serverError()
-                         .entity("Error creating property: " + e.getMessage())
+            return addCorsHeaders(Response.serverError()
+                         .entity("Error creating property: " + e.getMessage()))
                          .build();
         }
     }
@@ -90,16 +93,16 @@ public class PropertyResource {
             System.out.println("Updating property with ID: " + id);
             Property updated = propertyDAO.updateProperty(id, property);
             if (updated != null) {
-                return Response.ok(updated).build();
+                return addCorsHeaders(Response.ok(updated)).build();
             }
-            return Response.status(Response.Status.NOT_FOUND)
-                         .entity("Property not found with ID: " + id)
+            return addCorsHeaders(Response.status(Response.Status.NOT_FOUND)
+                         .entity("Property not found with ID: " + id))
                          .build();
         } catch (Exception e) {
             System.out.println("Error updating property: " + e.getMessage());
             e.printStackTrace();
-            return Response.serverError()
-                         .entity("Error updating property: " + e.getMessage())
+            return addCorsHeaders(Response.serverError()
+                         .entity("Error updating property: " + e.getMessage()))
                          .build();
         }
     }
@@ -112,18 +115,18 @@ public class PropertyResource {
             System.out.println("Deleting property with ID: " + id);
             boolean deleted = propertyDAO.deleteProperty(id);
             if (deleted) {
-                return Response.ok()
-                             .entity("Property successfully deleted")
+                return addCorsHeaders(Response.ok()
+                             .entity("Property successfully deleted"))
                              .build();
             }
-            return Response.status(Response.Status.NOT_FOUND)
-                         .entity("Property not found with ID: " + id)
+            return addCorsHeaders(Response.status(Response.Status.NOT_FOUND)
+                         .entity("Property not found with ID: " + id))
                          .build();
         } catch (Exception e) {
             System.out.println("Error deleting property: " + e.getMessage());
             e.printStackTrace();
-            return Response.serverError()
-                         .entity("Error deleting property: " + e.getMessage())
+            return addCorsHeaders(Response.serverError()
+                         .entity("Error deleting property: " + e.getMessage()))
                          .build();
         }
     }
@@ -146,12 +149,12 @@ public class PropertyResource {
             List<Property> properties = propertyDAO.searchProperties(
                 minPrice, maxPrice, neighborhood, minRooms);
             
-            return Response.ok(properties).build();
+            return addCorsHeaders(Response.ok(properties)).build();
         } catch (Exception e) {
             System.out.println("Error searching properties: " + e.getMessage());
             e.printStackTrace();
-            return Response.serverError()
-                         .entity("Error searching properties: " + e.getMessage())
+            return addCorsHeaders(Response.serverError()
+                         .entity("Error searching properties: " + e.getMessage()))
                          .build();
         }
     }
