@@ -3,8 +3,18 @@
 A modern full-stack application for managing student accommodations, featuring a powerful Java backend and sleek React frontend. Built with performance and user experience in mind.
 
 **🎯 Learning Focus: REST Web Services**  
-
 > 🚀 This project was developed as part of my journey learning RESTful Web Services, demonstrating practical implementation of REST principles in a real-world application.
+
+## 🎥 Demo Video
+Check out the working demo of this project:
+[REST API Implementation Demo - Student Housing Portal](https://youtu.be/DDn99701Zek)
+
+The video showcases:
+- REST API implementation in action
+- CRUD operations
+- Search functionality
+- Frontend-Backend integration
+
 ## ⚡ Tech Stack
 
 ### 🔧 Backend 
@@ -26,13 +36,11 @@ A modern full-stack application for managing student accommodations, featuring a
 - ShadCN UI Components
 
 ## 🏗️ Architecture
-
 ```
 Backend (Java REST API) ←→ MySQL Database ←→ React Frontend
 ```
 
 ## 📊 Database Structure
-
 ```sql
 CREATE TABLE properties (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -47,7 +55,6 @@ CREATE TABLE properties (
 ```
 
 ## 🔌 API Endpoints
-
 ```
 GET    /api/properties         → List all properties
 POST   /api/properties        → Create property
@@ -58,7 +65,6 @@ GET    /api/properties/search  → Search with filters
 ```
 
 ## 📁 Project Structure
-
 ```
 student-housing/
 ├── java-app/                # Backend
@@ -102,7 +108,6 @@ student-housing/
 ## ⚙️ Setup Guide
 
 ### Backend Configuration
-
 1. Configure MySQL:
 ```sql
 CREATE DATABASE student_housing;
@@ -124,7 +129,6 @@ mvn clean install
 ```
 
 ### Frontend Setup
-
 ```bash
 cd student-housing-client
 npm install
@@ -132,13 +136,13 @@ npm run dev
 ```
 
 Access the application at:
-- Frontend: http://localhost:5174
+- Frontend: http://localhost:5173
 - Backend: http://localhost:8080/student-housing-1.0-SNAPSHOT/api
 
 ---
 
 ## 🤝 Contributing
-This is a learning project focused on REST web services. Suggestions and improvements are welcome
+This is a learning project focused on REST web services. Suggestions and improvements are welcome.
 
 ## 📜 License
 This project is open source and available for other students learning REST web services.
